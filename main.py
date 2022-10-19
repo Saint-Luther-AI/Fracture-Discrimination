@@ -161,7 +161,6 @@ def fracture_predict():
                 image1 = image[k:k + 7]
                 lbp = lbp_3D_6(image, s=1)  # calculate the texture feature matrix
                 # calculate the histogram
-                hist = []
                 max_bins = int(lbp.max() + 1)  # 64
                 lbp = lbp.flatten()  # vectorization
                 hist, bins = np.histogram(lbp, normed=True, bins=max_bins, range=(0, max_bins))
@@ -177,7 +176,6 @@ def fracture_predict():
                 image1 = image[k:k + 7]
                 lbp = lbp_3D_6(image, s=1)
                 # calculate the histogram
-                hist = []
                 max_bins = int(lbp.max() + 1)  # 64
                 lbp = lbp.flatten()  # vectorization
                 hist, bins = np.histogram(lbp, normed=True, bins=max_bins, range=(0, max_bins))
