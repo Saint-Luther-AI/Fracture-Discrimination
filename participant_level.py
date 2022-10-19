@@ -6,65 +6,25 @@ from sklearn.metrics import classification_report
 from sklearn.preprocessing import normalize
 from sklearn.ensemble import RandomForestClassifier
 
-def lbp_3D(image): # 3D texture feature extraction
+def lbp_3D_6(image, s):  # 3D texture feature extraction
     z, w, h = image.shape
     texture_matrix = np.zeros([z, w, h])
-    for k in range(1, z - 1):
-        for i in range(1, w - 1):
-            for j in range(1, h - 1):
+    for k in range(s, z - s):
+        for i in range(s, w - s):
+            for j in range(s, h - s):
                 lbp = 0
-                if image[k - 1, i - 1, j - 1] >= image[k, i, j]:
+                if image[k - s, i, j] >= image[k, i, j]:
                     lbp = lbp + 1
-                if image[k - 1, i - 1, j ] >= image[k, i, j]:
+                if image[k, i - s, j] >= image[k, i, j]:
                     lbp = lbp + 2
-                if image[k - 1, i - 1, j + 1] >= image[k, i, j]:
-                    lbp = lbp + 3
-                if image[k - 1, i, j + 1] >= image[k, i, j]:
+                if image[k, i, j + s] >= image[k, i, j]:
                     lbp = lbp + 4
-                if image[k - 1, i + 1, j + 1] >= image[k, i, j]:
-                    lbp = lbp + 5
-                if image[k - 1, i + 1, j] >= image[k, i, j]:
-                    lbp = lbp + 6
-                if image[k - 1, i + 1, j - 1] >= image[k, i, j]:
-                    lbp = lbp + 7
-                if image[k - 1, i, j - 1] >= image[k, i, j]:
+                if image[k, i + s, j] >= image[k, i, j]:
                     lbp = lbp + 8
-                if image[k - 1, i, j] >= image[k, i, j]:
-                    lbp = lbp + 9
-                if image[k, i - 1, j - 1] >= image[k, i, j]:
-                    lbp = lbp + 10
-                if image[k, i - 1, j ] >= image[k, i, j]:
-                    lbp = lbp + 11
-                if image[k, i - 1, j + 1] >= image[k, i, j]:
-                    lbp = lbp + 12
-                if image[k, i, j + 1] >= image[k, i, j]:
-                    lbp = lbp + 13
-                if image[k, i + 1, j + 1] >= image[k, i, j]:
-                    lbp = lbp + 14
-                if image[k, i + 1, j] >= image[k, i, j]:
-                    lbp = lbp + 15
-                if image[k, i + 1, j - 1] >= image[k, i, j]:
+                if image[k, i, j - s] >= image[k, i, j]:
                     lbp = lbp + 16
-                if image[k, i, j - 1] >= image[k, i, j]:
-                    lbp = lbp + 17
-                if image[k + 1, i - 1, j - 1] >= image[k, i, j]:
-                    lbp = lbp + 18
-                if image[k + 1, i - 1, j ] >= image[k, i, j]:
-                    lbp = lbp + 19
-                if image[k + 1, i - 1, j + 1] >= image[k, i, j]:
-                    lbp = lbp + 20
-                if image[k + 1, i, j + 1] >= image[k, i, j]:
-                    lbp = lbp + 21
-                if image[k + 1, i + 1, j + 1] >= image[k, i, j]:
-                    lbp = lbp + 22
-                if image[k + 1, i + 1, j] >= image[k, i, j]:
-                    lbp = lbp + 23
-                if image[k + 1, i + 1, j - 1] >= image[k, i, j]:
-                    lbp = lbp + 24
-                if image[k + 1, i, j - 1] >= image[k, i, j]:
-                    lbp = lbp + 25
-                if image[k + 1, i, j] >= image[k, i, j]:
-                    lbp = lbp + 26
+                if image[k + s, i, j] >= image[k, i, j]:
+                    lbp = lbp + 32
                 texture_matrix[k, i, j] = lbp
     return texture_matrix
 
@@ -148,9 +108,9 @@ def single_sample():
     data = np.hstack((data, label))  # 0:1 Participant ID; 1:360 derived features; 361:362 label
     np.savetxt("Data\data_participant_level_MSLBP.csv", data, delimiter=",")
 
-def resampling():
+def fracture_predict():
 
-    image_feature = np.zeros([1279, 352])  # image features  46 fractures and 127 non-fractures 644+635
+    image_feature = np.zeros([1279, 64])  # image features  46 fractures and 127 non-fractures 644+635
     clinical_feature = np.zeros([1279, 7])  # clinical features + BMD
     label = []
 
@@ -199,10 +159,10 @@ def resampling():
             for k in (60, 67, 74, 81, 88):
                 label.append(gt_classes)
                 image1 = image[k:k + 7]
-                lbp = lbp_3D(image1)  # calculate the texture feature matrix
+                lbp = lbp_3D_6(image, s=1)  # calculate the texture feature matrix
                 # calculate the histogram
                 hist = []
-                max_bins = int(lbp.max() + 1)  # 352
+                max_bins = int(lbp.max() + 1)  # 64
                 lbp = lbp.flatten()  # vectorization
                 hist, bins = np.histogram(lbp, normed=True, bins=max_bins, range=(0, max_bins))
                 image_feature[i] = np.array(hist)
@@ -215,10 +175,10 @@ def resampling():
             for k in (12, 19, 26, 33, 40, 47, 54, 61, 68, 75, 82, 89, 96, 103):
                 label.append(gt_classes)
                 image1 = image[k:k + 7]
-                lbp = lbp_3D(image1)
+                lbp = lbp_3D_6(image, s=1)
                 # calculate the histogram
                 hist = []
-                max_bins = int(lbp.max() + 1)  # 352
+                max_bins = int(lbp.max() + 1)  # 64
                 lbp = lbp.flatten()  # vectorization
                 hist, bins = np.histogram(lbp, normed=True, bins=max_bins, range=(0, max_bins))
                 image_feature[i] = np.array(hist)
@@ -241,40 +201,9 @@ def resampling():
     label = np.array(label)
     label = label.reshape([1279, 1])
     data = np.hstack((PI_list, data))
-    data = np.hstack((data, label))  # 0:1 Participant ID; 1:360 derived features; 361:362 label
-    np.savetxt("Data/data_resampling2.csv", data, delimiter=",")
-
-def sensitivity_specificity():
-
-    output_matrix = np.loadtxt(open("Outcome/outcome_CT.csv", "rb"), delimiter=",", skiprows=0)
-    threshold = 0.68
-
-    TP = FN = TN = FP = 0
-    for i in range(output_matrix.shape[0]): # output_matrix: participant ID, fracture probability, label
-        score = output_matrix[i][1]
-        label = output_matrix[i][-1]
-
-        if score >= threshold:
-            predict = 1
-        else:
-            predict = 0
-
-        if predict == 1 and label == 1:
-            TP = TP + 1
-        if predict == 0 and label == 1:
-            FN = FN + 1
-        if predict == 0 and label == 0:
-            TN = TN + 1
-        if predict == 1 and label == 0:
-            FP = FP + 1
-
-    sensitivity = TP / (TP + FN)
-    specificity = TN / (TN + FP)
-    print(sensitivity, specificity)
-
-def cross_validation():
-
-    data = np.loadtxt(open("Data/data_resampling.csv", "rb"), delimiter=",", skiprows=0)
+    data = np.hstack((data, label))  # 0:1 Participant ID; 1:72 derived features; 72:73 label
+    
+    # cross validation
     data1 = []
     data2 = []
     data3 = []
@@ -300,7 +229,7 @@ def cross_validation():
     sample_output = [] # participant ID, fracture probability, label
     for dataset in (data1, data2, data3, data4, data5):
         # select one subset as the testing set
-        test_data = dataset[:, 1:65]
+        test_data = dataset[:, 1:72]
         test_label = dataset[:, -1]
         # other subsets are used as training set
         dataset_list = [data1, data2, data3, data4, data5]
@@ -314,7 +243,7 @@ def cross_validation():
                 else:
                     train_data_whole.extend(dataset_list[i])
         train_data_whole = np.array(train_data_whole)
-        train_data = train_data_whole[:, 1:65]  # 0:1 Participant ID; 1:72 derived features; 72:73 label
+        train_data = train_data_whole[:, 1:72]  # 0:1 Participant ID; 1:72 derived features; 72:73 label
         train_label = train_data_whole[:, -1]
 
         # train the random forest classifier
@@ -342,12 +271,11 @@ def cross_validation():
                 output[i][2] = sample_output[j][2]
         output[i][1] = max(probability_list)
 
-    np.savetxt("Outcome/outcome_CT.csv", output, delimiter=",")
+    np.savetxt("Outcome/outcome_CT_clinical_BMD.csv", output, delimiter=",")
 
 if __name__ == '__main__':
 
     #single_sample()
-    resampling()
-    #cross_validation()
-    #sensitivity_specificity()
+    fracture_predict()
+    
 
