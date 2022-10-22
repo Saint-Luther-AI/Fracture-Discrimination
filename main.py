@@ -15,11 +15,11 @@ def lbp_3D(image, s): # 3D texture feature extraction
               2 ** 8, 2 ** 9, 2 ** 10, 2 ** 11, 2 ** 12, 2 ** 13, 2 ** 14,
               2 ** 15, 2 ** 16, 2 ** 17, 2 ** 18, 2 ** 19, 2 ** 20, 2 ** 21,
               2 ** 22, 2 ** 23, 2 ** 24, 2 ** 25]
-    binary_code = np.zeros(26)
 
     for k in range(s, z - s):
         for i in range(s, w - s):
             for j in range(s, h - s):
+                binary_code = np.zeros(26)
                 if image[k - s, i - s, j - s] >= image[k, i, j]:
                     binary_code[0] = 1
                 if image[k - s, i - s, j ] >= image[k, i, j]:
@@ -424,6 +424,7 @@ def image_clinical():
     data = np.hstack((PI_list, data))
     data = np.hstack((data, label))  # 0:1 Participant ID; 1:72 derived features; 72:73 label
     np.savetxt("Data/data_tibia.csv", data, delimiter=",")
+
     #data = np.loadtxt(open("Data/data_tibia.csv", "rb"), delimiter=",", skiprows=0)
 
     # cross validation  divide data into five subsets based on participant level
@@ -590,7 +591,10 @@ def image():
     label = np.array(label).reshape([sample_number, 1])
     data = np.hstack((PI_list, data))
     data = np.hstack((data, label))  # 0:1 Participant ID; 1:72 derived features; 72:73 label
-    #np.savetxt("Data/data_tibia.csv", data, delimiter=",")
+
+    np.savetxt("Data/data_tibia.csv", data, delimiter=",")
+
+    #data = np.loadtxt(open("Data/data_tibia.csv", "rb"), delimiter=",", skiprows=0)
 
     # cross validation  divide data into five subsets based on participant level
     number = 173
