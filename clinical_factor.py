@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 
 def clinical_BMD():  # analyze the clinical risk factors and BMD
 
-    clinical_path = "E:/Experiment/Osteoporosis/Data/Classification/HCS.xlsx"
+    clinical_path = "Data/Classification/HCS.xlsx"
     df_clinical = pd.read_excel(io=clinical_path)
     number_list = df_clinical["abserno"]
     folder = 'Outcome/' # create model output file folder
@@ -66,7 +66,7 @@ def clinical_BMD():  # analyze the clinical risk factors and BMD
 
 def clinical():
 
-    clinical_path = "E:/Experiment/Osteoporosis/Data/Classification/HCS.xlsx"
+    clinical_path = "Data/Classification/HCS.xlsx"
     df_clinical = pd.read_excel(io=clinical_path)
     number_list = df_clinical["abserno"]
     folder = 'Outcome/'  # create model output file folder
@@ -123,7 +123,7 @@ def clinical():
 
 def BMD():
 
-    clinical_path = "E:/Experiment/Osteoporosis/Data/Classification/HCS.xlsx"
+    clinical_path = "Data/Classification/HCS.xlsx"
     df_clinical = pd.read_excel(io=clinical_path)
     number_list = df_clinical["abserno"]
     folder = 'Outcome/'  # create model output file folder
