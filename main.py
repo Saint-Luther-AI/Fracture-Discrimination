@@ -81,9 +81,9 @@ def single_sample():
     clinical_feature = []  # clinical features + BMD
     label = []
 
-    main_dir = "E:/Experiment/Osteoporosis/Data/Classification/"
-    label_path = "E:/Experiment/Osteoporosis/Data/Classification/Label.xlsx"
-    clinical_path = "E:/Experiment/Osteoporosis/Data/Classification/HCS.xlsx"  # clinical data file
+    main_dir = "Data/Classification/"
+    label_path = "Data/Classification/Label.xlsx"
+    clinical_path = "Data/Classification/HCS.xlsx"  # clinical data file
     df2 = pd.read_excel(io=label_path)
     df_clinical = pd.read_excel(io=clinical_path)
     files = [file for file in os.listdir(main_dir) if file.endswith(".h5")]  # image file folder
@@ -164,9 +164,9 @@ def accuracy(test_label, score):
 
 def image_clinical_bmd():
 
-    main_dir = "E:/Experiment/Osteoporosis/Data/Classification/"
-    label_path = "E:/Experiment/Osteoporosis/Data/Classification/Label.xlsx"  # participant ID -- image data files
-    clinical_path = "E:/Experiment/Osteoporosis/Data/Classification/HCS.xlsx"  # clinical data file
+    main_dir = "Data/Classification/"
+    label_path = "Data/Classification/Label.xlsx"  # participant ID -- image data files
+    clinical_path = "Data/Classification/HCS.xlsx"  # clinical data file
     df2 = pd.read_excel(io=label_path)
     df_clinical = pd.read_excel(io=clinical_path)
     files = [file for file in os.listdir(main_dir) if file.endswith(".h5")]  # image file folder
@@ -332,9 +332,9 @@ def image_clinical_bmd():
 
 def image_clinical():
 
-    main_dir = "E:/Experiment/Osteoporosis/Data/Classification/"
-    label_path = "E:/Experiment/Osteoporosis/Data/Classification/Label.xlsx"  # participant ID -- image data files
-    clinical_path = "E:/Experiment/Osteoporosis/Data/Classification/HCS.xlsx"  # clinical data file
+    main_dir = "Data/Classification/"
+    label_path = "Data/Classification/Label.xlsx"  # participant ID -- image data files
+    clinical_path = "Data/Classification/HCS.xlsx"  # clinical data file
     df2 = pd.read_excel(io=label_path)
     df_clinical = pd.read_excel(io=clinical_path)
     files = [file for file in os.listdir(main_dir) if file.endswith(".h5")]  # image file folder
@@ -500,9 +500,9 @@ def image_clinical():
 
 def image():
 
-    main_dir = "E:/Experiment/Osteoporosis/Data/Classification/"
-    label_path = "E:/Experiment/Osteoporosis/Data/Classification/Label.xlsx"  # participant ID -- image data files
-    clinical_path = "E:/Experiment/Osteoporosis/Data/Classification/HCS.xlsx"  # clinical data file
+    main_dir = "Data/Classification/"
+    label_path = "Data/Classification/Label.xlsx"  # participant ID -- image data files
+    clinical_path = "Data/Classification/HCS.xlsx"  # clinical data file
     df2 = pd.read_excel(io=label_path)
     df_clinical = pd.read_excel(io=clinical_path)
     files = [file for file in os.listdir(main_dir) if file.endswith(".h5")]  # image file folder
