@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 
 def clinical_BMD():  # analyze the clinical risk factors and BMD
 
-    clinical_path = "Data/Classification/HCS.xlsx"
+    clinical_path = "E:/Experiment/Osteoporosis/Data/Classification/HCS.xlsx"
     df_clinical = pd.read_excel(io=clinical_path)
     number_list = df_clinical["abserno"]
     folder = 'Outcome/' # create model output file folder
@@ -66,7 +66,7 @@ def clinical_BMD():  # analyze the clinical risk factors and BMD
 
 def clinical():
 
-    clinical_path = "Data/Classification/HCS.xlsx"
+    clinical_path = "E:/Experiment/Osteoporosis/Data/Classification/HCS.xlsx"
     df_clinical = pd.read_excel(io=clinical_path)
     number_list = df_clinical["abserno"]
     folder = 'Outcome/'  # create model output file folder
@@ -121,9 +121,10 @@ def clinical():
     model_output = np.array(model_output)
     np.savetxt("Outcome/outcome_clinical.csv", model_output, delimiter=",")
 
+
 def BMD():
 
-    clinical_path = "Data/Classification/HCS.xlsx"
+    clinical_path = "E:/Experiment/Osteoporosis/Data/Classification/HCS.xlsx"
     df_clinical = pd.read_excel(io=clinical_path)
     number_list = df_clinical["abserno"]
     folder = 'Outcome/'  # create model output file folder
@@ -166,7 +167,7 @@ def BMD():
 
     # fracture prediction
     data = data[:, -2:] # [BMD,label]
-    train_data, test_data, train_label, test_label = train_test_split(data[:,0:1], data[:,1:2], random_state=18, test_size=0.2)
+    train_data, test_data, train_label, test_label = train_test_split(data[:,0:1], data[:,1:2], random_state=31, test_size=0.2)
     model = LogisticRegression()
     model.fit(train_data, train_label)
     model_output = []
@@ -182,5 +183,6 @@ def BMD():
 if __name__ == '__main__':
 
     clinical_BMD()
-    #clinical()
-    #BMD()
+    clinical()
+    BMD()
+
